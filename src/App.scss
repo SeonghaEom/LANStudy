@@ -45,10 +45,6 @@ ol, ul {
   width: 100px;
 }
 
-.question-box {
-  display: flex;
-  flex-direction: column;
-}
 
 .question {
   display: flex;
@@ -59,10 +55,31 @@ ol, ul {
   margin-left: 20px;
 }
 
-.QuestionBoard-container {
-  margin: 20px;
-}
 
-.board-container {
-  
+.container {
+  flex: 1;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  scrollbar-width: none;
+
+  &-question-board {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  &-board {
+    margin-top: 20px;
+  }
+
+  &-question-box {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+  }
 }

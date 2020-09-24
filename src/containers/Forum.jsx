@@ -47,9 +47,9 @@ class QuestionBoard extends React.Component {
 
 
       return (
-          <div className = 'QuestionBoard-container'>
-              <Button onClick = {() => this.writeButtonClick()}/>
-              <div className = 'board-container'>
+          <div className = 'container-question-board'>
+              <Button class = "button-question" variant = "primary" onClick = {() => this.writeButtonClick()}> Ask a Question </Button>
+              <div className = 'container-board'>
               <ListGroup>
                 {questionList.map(item => (
                   <Link to={`/question/${item["id"]}`}>

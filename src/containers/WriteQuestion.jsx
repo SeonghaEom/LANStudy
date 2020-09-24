@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import {updateQuestionList } from '../actions';
+import Button from 'react-bootstrap/Button';
 
 //redux's state to this.props
 const mapStateToProps = state => ({
@@ -52,21 +53,21 @@ class Question extends React.Component {
 
     render(){
         return(
-            <div className="question">
-              <div className = 'question-box'>
+            <div className="container">
+              <div className = 'container-question-box'>
                 <label>
                   Title
                 </label>
                 <textarea onChange={(event) => this.handleOnChange(event, "title")} value={this.state.titleValue}>  </textarea>
               </div>
-              <div className = 'question-box'>
+              <div className = 'container-question-box'>
                 <label>
                   Body
                 </label>
                 <textarea onChange={(event) => this.handleOnChange(event, "body")} value={this.state.bodyValue}> </textarea>
               </div>
                 <Link to = "/">
-                  <button onClick={() => this.handleSubmit()}> </button>
+                  <Button variant = "primary" onClick={() => this.handleSubmit()}> Save </Button>
                 </Link>
             </div>
         )
