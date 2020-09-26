@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
-import {updateQuestionList } from '../actions';
+import { addQuestion, getQuestionList } from '../actions';
 import Button from 'react-bootstrap/Button';
 
 //redux's state to this.props
@@ -12,7 +12,8 @@ const mapStateToProps = state => ({
 //redux's dispatch to this.props
 const mapDispatchToProps = dispatch => {
     return {
-        _updateQuestionList: (newQL) => dispatch(updateQuestionList(newQL)),
+        _addQuestion: (newQ) => dispatch(addQuestion(newQ)),
+        _getQuestionList: (QL) => dispatch(getQuestionList(QL)),
     }
 }
 
@@ -30,10 +31,12 @@ class Question extends React.Component {
     handleSubmit() {
         const {
             questionList,
-            _updateQuestionList
+            _addQuestion,
+            _getQuestionList,
         } = this.props;
 
-        _updateQuestionList(questionList.concat([{id: questionList.length+1, title: this.state.titleValue, body: this.state.bodyValue}]))
+        _addQuestion({title: this.state.titleValue, body: this.state.bodyValue});
+        _getQuestionList(questionList)
     }
 
     handleOnChange(event, which) {

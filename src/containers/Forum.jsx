@@ -4,6 +4,9 @@ import { Link, useHistory } from 'react-router-dom';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 import { getQuestionList } from '../actions';
+import { useFirebase } from "react-redux-firebase";
+import firestore from '../config/fbconfig';
+
 
 
 //redux's state to this.props
@@ -15,6 +18,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
     return {
         _updateQuestionList: (QuestionList) => dispatch(getQuestionList(QuestionList)),
+        _getQuestionList: () => dispatch(getQuestionList()),
     }
 }
 
@@ -31,28 +35,38 @@ class QuestionBoard extends React.Component {
     super(props);
     this.handleClick = this.handleClick.bind(this);
     this.writeButtonClick = this.writeButtonClick.bind(this);
+    this.joinButtonClick = this.joinButtonClick.bind(this);
   }
 
   handleClick() {
-    this.props.history.push("/question");
+    // this.props.history.push("/:id");
   }
 
   writeButtonClick() {
     this.props.history.push("/write");
   }
-  render () {
-      console.log("at Foruum", this.props.questionList)
-      const questionList = this.props.questionList;
-      // let history = useHistory();
 
+  joinButtonClick() {
+    this.props.history.push("/join");
+  }
+  render () {
+      console.log("at Foruum", this.props);
+      const questionList = this.props.questionList;
+      const _getQuestionList = this.props._getQuestionList;
+      if (questionList.length == 0){
+        _getQuestionList();
+      }
+      
+      // let history = useHistory();
 
       return (
           <div className = 'container-question-board'>
               <Button class = "button-question" variant = "primary" onClick = {() => this.writeButtonClick()}> Ask a Question </Button>
+              <Button class = "button-question" variant = "primary" onClick = {() => this.joinButtonClick()}> Join Session </Button>
               <div className = 'container-board'>
               <ListGroup>
                 {questionList.map(item => (
-                  <Link to={`/question/${item["id"]}`}>
+                  <Link to={`question/${item["id"]}`}>
                     <ListGroup.Item onClick={() => this.handleClick()}>{item["title"]}</ListGroup.Item>
                   </Link>
                 ))

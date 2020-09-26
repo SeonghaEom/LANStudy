@@ -8,10 +8,29 @@ import * as serviceWorker from './serviceWorker';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { persistor, store } from './store';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+import { ReactReduxFirebaseProvider } from "react-redux-firebase";
+import { createFirestoreInstance } from "redux-firestore";
+
+const rrfConfig = {
+  userProfile: "users",
+  useFirestoreForProfile: true,
+};
+
+const rrfProps = {
+  firebase,
+  config: rrfConfig,
+  dispatch: store.dispatch,
+  createFirestoreInstance,
+};
 ReactDOM.render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
+          <ReactReduxFirebaseProvider {...rrfProps}>
             <App />
+          </ReactReduxFirebaseProvider>
         </PersistGate>
     </Provider>, 
     document.getElementById('root')

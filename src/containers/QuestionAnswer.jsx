@@ -37,7 +37,7 @@ class QuestionAnswer extends React.Component {
       } = this.props;
       
       const question = questionList.filter(function(element, index, array){
-        return (element["id"] == Number(questionId))
+        return (element["id"] == questionId)
       })[0];
       console.log(question);
         return(
