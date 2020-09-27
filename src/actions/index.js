@@ -24,20 +24,6 @@ export const actionName = actionParameter => ({
     actionParameter
 })
 
-export const updateHistory = history => ({
-    type: 'UPDATE_HISTORY',
-    history
-})
-
-export const updateStepNumber = step => ({
-    type: 'UPDATE_STEP_NUMBER',
-    step
-})
-
-export const updatePlayer = player => ({
-    type: 'UPDATE_PLAYER',
-    player
-})
 
 export const getQuestionList = questionList => {
 
