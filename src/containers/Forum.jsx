@@ -12,6 +12,7 @@ import firestore from '../config/fbconfig';
 //redux's state to this.props
 const mapStateToProps = state => ({
   questionList: state.questionList,
+  user: state.loginResult.value,
 })
 
 //redux's dispatch to this.props
@@ -36,6 +37,7 @@ class QuestionBoard extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.writeButtonClick = this.writeButtonClick.bind(this);
     this.joinButtonClick = this.joinButtonClick.bind(this);
+    this.loginButtonClick = this.loginButtonClick.bind(this);
   }
 
   handleClick() {
@@ -49,6 +51,11 @@ class QuestionBoard extends React.Component {
   joinButtonClick() {
     this.props.history.push("/join");
   }
+
+  loginButtonClick() {
+    this.props.history.push("/login");
+  }
+
   render () {
       console.log("at Foruum", this.props);
       const questionList = this.props.questionList;
@@ -63,6 +70,7 @@ class QuestionBoard extends React.Component {
           <div className = 'container-question-board'>
               <Button class = "button-question" variant = "primary" onClick = {() => this.writeButtonClick()}> Ask a Question </Button>
               <Button class = "button-question" variant = "primary" onClick = {() => this.joinButtonClick()}> Join Session </Button>
+              <Button class = "button-question" variant = "primary" onClick = {() => this.loginButtonClick()}> Login </Button>
               <div className = 'container-board'>
               <ListGroup>
                 {questionList.map(item => (

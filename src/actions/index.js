@@ -1,4 +1,5 @@
 import firestore from '../config/fbconfig';
+import * as firebase from 'firebase'
 
 async function get() {
   var rows= [];
@@ -77,7 +78,21 @@ export const addQuestion = question => {
         dispatch({ type: 'ADD_QUESTION', question });
       })
       .catch(err => {
-        dispatch({ type: 'CREATE_PROJECT', err });
+        dispatch({ type: 'ADD_QUESTION', err });
       });
   };
+}
+
+export const login = loginForm => {
+  return (dispatch, getState) => {
+    firebase.auth().signInWithEmailAndPassword(loginForm.id, loginForm.pw)
+      .then(() => {
+        var user = firebase.auth().currentUser;
+        // console.log(user);
+        dispatch( {type: 'LOGIN_SUCCESS',  user })
+      })
+      .catch(err => {
+        dispatch ({ type: 'LOGIN_ERROR', err});
+      });
+  }
 }

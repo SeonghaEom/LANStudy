@@ -7,6 +7,7 @@ import Question from './containers/WriteQuestion';
 import QuestionAnswer from './containers/QuestionAnswer';
 import Forum from './containers/Forum';
 import Session from './containers/Session';
+import Login from './containers/Login';
 
 const mapStateToProps = state => ({
   ...state
@@ -22,6 +23,7 @@ function App() {
         <Route path="/question/:id" component={QuestionAnswer} />
         <Route path="/" exact={true} component={Forum} />
         <Route path="/join" exact={true} component={Session} />
+        <Route path="/login" exact={true} component={Login} />
       </div>
     </BrowserRouter>
   );
