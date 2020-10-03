@@ -1,5 +1,5 @@
 import firestore from '../config/fbconfig';
-import * as firebase from 'firebase'
+import * as firebase from 'firebase';
 
 async function get() {
   var rows= [];
