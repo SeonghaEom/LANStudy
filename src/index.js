@@ -29,10 +29,12 @@ ReactDOM.render(
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ReactReduxFirebaseProvider {...rrfProps}>
-            <App />
+              <React.StrictMode>
+                <App />
+              </React.StrictMode>,
           </ReactReduxFirebaseProvider>
         </PersistGate>
-    </Provider>, 
+    </Provider>,
     document.getElementById('root')
 );
 
