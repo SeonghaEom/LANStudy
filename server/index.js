@@ -13,6 +13,18 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 
+const PORT = process.env.PORT || 9000; // use 9000 port
+
+var corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true
+}
+app.use(cors(corsOptions))
+
+
+let socketList = {};
+
+
 // Setup logger
 // app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
 
@@ -30,7 +42,6 @@ const io = require('socket.io')(http);
 //   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 // });
 
-const PORT = process.env.PORT || 9000; // use 9000 port
 
 // Socket
 io.on('connection', (socket) => {
@@ -117,9 +128,7 @@ io.on('connection', (socket) => {
   });
 });
 
-app.use(cors())
-
-app.listen(PORT, () => {
+http.listen(PORT, () => {
 
   console.log(`App listening on port ${PORT}!`);
 

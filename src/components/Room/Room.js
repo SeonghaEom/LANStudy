@@ -127,6 +127,22 @@ const Room = (props) => {
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    const start = new Date();
+    let latestCheckTime = start;
+    const intervalId = setInterval(() => {
+      const now = new Date();
+      const delta = now - latestCheckTime;
+      console.log(delta);
+      latestCheckTime = now;
+      //update firebase user studytime by adding
+    }, 60000);
+    return () => {
+      // unmount
+      clearInterval(intervalId);
+    }
+  }, []);
+
   function createPeer(userId, caller, stream) {
     const peer = new Peer({
       initiator: true,
