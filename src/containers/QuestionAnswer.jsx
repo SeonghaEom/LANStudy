@@ -11,6 +11,8 @@ import { getQuestionList } from '../actions';
 //redux's state to this.props
 const mapStateToProps = state => ({
   questionList: state.questionList,
+  question: state.question,
+
 })
 
 //redux's dispatch to this.props
@@ -28,22 +30,27 @@ class QuestionAnswer extends React.Component {
     
 
     render(){
-      console.log(this.props.match.params)
-      const questionId = this.props.match.params["id"];
+      console.log(this.props)
+      // const questionId = this.props.match.params["id"];
       const {
         a, b, c, 
         questionList,
+        question,
         _getQuestionList
       } = this.props;
       
-      const question = questionList.filter(function(element, index, array){
-        return (element["id"] == questionId)
-      })[0];
-      console.log(question);
+      // const question = questionList.filter(function(element, index, array){
+      //   return (element["id"] == questionId)
+      // })[0];
+      console.log("question ", question);
         return(
-            <div className="question">
-              {question["title"]}
-              {question["body"]}
+            <div className="container-question">
+              <div className="question-title">
+                {question["title"]}
+              </div>
+              <div className="question-body">
+                {question["body"]}
+              </div>
             </div>
         )
     }

@@ -5,6 +5,11 @@ export default (state=[], action) => {
         return action.questionList
       case 'UPDATE_QUESTION_LIST':
         return action.questionList
+      case 'FILTER_QUESTION_LIST':
+      console.log(action.questionList)
+        return action.questionList.filter(question => {
+          return question['topic'] == action.key
+          })
       default:
         return state
     }

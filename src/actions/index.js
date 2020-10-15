@@ -47,13 +47,19 @@ export const getQuestionList = questionList => {
   }
 }
 
+export const filterQuestionList = (questionList, key) => ({
+  type: 'FILTER_QUESTION_LIST',
+  questionList,
+  key
+})
+
 // export const getQuestionList2 = () = ({
 //   type: 'GET_QUESTION_LIST2',
 // })
 
 export const updateQuestionList = questionList => ({
     type: 'UPDATE_QUESTION_LIST',
-    questionList
+    questionList,
 })
 
 export const getQuestion = question => ({
@@ -82,6 +88,12 @@ export const addQuestion = question => {
       });
   };
 }
+
+export const filterQuestion = (questionList, id) => ({
+  type: 'FILTER_QUESTION',
+  questionList,
+  id
+})
 
 export const login = loginForm => {
   return (dispatch, getState) => {

@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
-import { getQuestionList } from '../actions';
+import QuestionAnswer from './QuestionAnswer';
+import { getQuestionList, filterQuestion } from '../actions';
 import { useFirebase } from "react-redux-firebase";
 import firestore from '../config/fbconfig';
 
@@ -13,13 +14,15 @@ import firestore from '../config/fbconfig';
 const mapStateToProps = state => ({
   questionList: state.questionList,
   user: state.loginResult.value,
+  question: state.question,
 })
 
 //redux's dispatch to this.props
 const mapDispatchToProps = dispatch => {
     return {
-        _updateQuestionList: (QuestionList) => dispatch(getQuestionList(QuestionList)),
-        _getQuestionList: () => dispatch(getQuestionList()),
+      _updateQuestionList: (QuestionList) => dispatch(getQuestionList(QuestionList)),
+      _getQuestionList: () => dispatch(getQuestionList()),
+      _filterQuestion: (QL, id) => dispatch(filterQuestion(QL, id)),
     }
 }
 
@@ -34,14 +37,16 @@ function Item(props){
 class QuestionBoard extends React.Component {
   constructor (props){
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    // this.handleClick = this.handleClick.bind(this);
     this.writeButtonClick = this.writeButtonClick.bind(this);
     this.joinButtonClick = this.joinButtonClick.bind(this);
     this.loginButtonClick = this.loginButtonClick.bind(this);
   }
 
-  handleClick() {
+  handleClick = (id) => {
     // this.props.history.push("/:id");
+    console.log("click a question")
+    this.props._filterQuestion(this.props.questionList, id)
   }
 
   writeButtonClick() {
@@ -67,20 +72,22 @@ class QuestionBoard extends React.Component {
       // let history = useHistory();
 
       return (
-          <div className = 'container-question-board'>
-              <Button class = "button-question" variant = "primary" onClick = {() => this.writeButtonClick()}> Ask a Question </Button>
-              <Button class = "button-question" variant = "primary" onClick = {() => this.joinButtonClick()}> Join Session </Button>
-              <Button class = "button-question" variant = "primary" onClick = {() => this.loginButtonClick()}> Login </Button>
-              <div className = 'container-board'>
-              <ListGroup>
+          <div className="container-board">
+            <div className = 'container-forum'>
+              <div className = 'forum-top'>
+                <Button bsPrefix="button" className="button-askquestion" onClick = {() => this.writeButtonClick()}> Ask a Question </Button>
+                <Button bsPrefix="button" className="button-joinsession" onClick = {() => this.joinButtonClick()}> Join Session </Button>
+              </div>
+              <div >
+              <ListGroup bsPrefix="forum" className="forum-list">
                 {questionList.map(item => (
-                  <Link to={`question/${item["id"]}`}>
-                    <ListGroup.Item onClick={() => this.handleClick()}>{item["title"]}</ListGroup.Item>
-                  </Link>
+                  <ListGroup.Item bsPrefix="forum" className = "forum-item" key={item["id"]} onClick={() => this.handleClick(item["id"])}>{item["title"].slice(0,15) + "..."}</ListGroup.Item>
                 ))
                 }
               </ListGroup>
               </div>
+            </div>
+            <QuestionAnswer/>
           </div>
       )
   }
