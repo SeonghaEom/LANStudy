@@ -150,7 +150,7 @@ ol, ul {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 100vh;
+    height: 100vh; // stretch till end
     font-family: sans-serif;
 
   }
@@ -188,5 +188,25 @@ ol, ul {
     flex-direction: column;
     background-color: $thread-color;
     height: 100%;
+  }
+
+  &-login {
+    font-family: sans-serif;
+    background-color: $sidebar-color;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  &-writequestion {
+    font-family: sans-serif;
+    background-color: $sidebar-color;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
   }
 }

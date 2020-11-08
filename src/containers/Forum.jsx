@@ -40,7 +40,6 @@ class QuestionBoard extends React.Component {
     // this.handleClick = this.handleClick.bind(this);
     this.writeButtonClick = this.writeButtonClick.bind(this);
     this.joinButtonClick = this.joinButtonClick.bind(this);
-    this.loginButtonClick = this.loginButtonClick.bind(this);
   }
 
   handleClick = (id) => {
@@ -57,10 +56,6 @@ class QuestionBoard extends React.Component {
     this.props.history.push("/join");
   }
 
-  loginButtonClick() {
-    this.props.history.push("/login");
-  }
-
   render () {
       console.log("at Foruum", this.props);
       const questionList = this.props.questionList;
@@ -72,7 +67,7 @@ class QuestionBoard extends React.Component {
       // let history = useHistory();
 
       return (
-          <div className="container-board">
+          <div className="container-board"> 
             <div className = 'container-forum'>
               <div className = 'forum-top'>
                 <Button bsPrefix="button" className="button-askquestion" onClick = {() => this.writeButtonClick()}> Ask a Question </Button>

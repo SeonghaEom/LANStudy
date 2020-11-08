@@ -70,7 +70,7 @@ class Sidebar extends React.Component {
             </Nav.Item>    
           </Nav>
         </div>
-        <Forum/>
+        <Forum history={this.props.history}/>
       </div>
     )
   }

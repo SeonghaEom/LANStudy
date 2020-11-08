@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addQuestion, getQuestionList } from '../actions';
 import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 
 //redux's state to this.props
 const mapStateToProps = state => ({
@@ -23,8 +24,9 @@ class Question extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
         this.state = {
-          titleValue : 'enter title',
-          bodyValue: 'enter body',
+          titleValue : null,
+          bodyValue: null,
+          topicValue: null,
       }
     }
 
@@ -34,12 +36,15 @@ class Question extends React.Component {
             _addQuestion,
             _getQuestionList,
         } = this.props;
+        // console.log(this.state.titleValue, this.state.bodyValue);
 
-        _addQuestion({title: this.state.titleValue, body: this.state.bodyValue});
+        _addQuestion({title: this.state.titleValue, body: this.state.bodyValue, topic: this.state.topicValue});
         _getQuestionList(questionList)
     }
 
     handleOnChange(event, which) {
+      event.persist();
+      console.log(event);
       switch (which){
         case ("title"):
           this.setState({
@@ -51,26 +56,54 @@ class Question extends React.Component {
             bodyValue: event.target.value
           })
         break;
+        case ("topic"):
+          this.setState({
+            topicValue: event.target.value
+          })
+        break;
       }
     }
 
     render(){
         return(
-            <div className="container">
+            <div className="container-writequestion">
               <div>
-                <label>
-                  Title
-                </label>
-                <textarea onChange={(event) => this.handleOnChange(event, "title")} value={this.state.titleValue}>  </textarea>
-              </div>
-              <div className = 'container-question-box'>
-                <label>
-                  Body
-                </label>
-                <textarea onChange={(event) => this.handleOnChange(event, "body")} value={this.state.bodyValue}> </textarea>
+                <Form>
+                  <Form.Group controlId="formBasicEmail">
+                    <Form.Label column="lg" lg={2}> Write a question summary </Form.Label>
+                    <Form.Control
+                      size="lg"
+                      type="text"
+                      placeholder="Write a question summary"
+                      onChange={(event) => this.handleOnChange(event, "title")} value={this.state.titleValue}
+                      />
+                  </Form.Group>
+
+                  <Form.Group controlId="formBasicPassword">
+                    <Form.Control
+                      size="sm"
+                      as="textarea"
+                      rows={5}
+                      placeholder="Write the details about your complex question"
+                      onChange={(event) => this.handleOnChange(event, "body")} value={this.state.bodyValue}
+                      />
+                  </Form.Group>
+                  <Form.Group controlId="formBasicCheckbox">
+                    {/* <Form.Check type="checkbox" label="Check me out" /> */}
+                    <Form.Control
+                      as="select"
+                      onChange={(event) => this.handleOnChange(event, "topic")} value={this.state.topicValue}
+                      custom>
+                      <option>영어</option>
+                      <option>수능</option>
+                      <option>취업준비</option>
+                      <option>공시생</option>
+                    </Form.Control>
+                  </Form.Group>
+                </Form>
               </div>
                 <Link to = "/">
-                  <Button variant = "primary" onClick={() => this.handleSubmit()}> Save </Button>
+                  <Button variant = "primary" onClick={() => this.handleSubmit()}> Post </Button>
                 </Link>
             </div>
         )
