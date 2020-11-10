@@ -10,8 +10,6 @@ async function get() {
         const question = doc.data();
         
         const id = doc.id;
-        // question.id = id;
-        // console.log({id : id, ...question});
         rows.push({id : id, ...question});
       })
     });
@@ -32,12 +30,20 @@ export const getQuestionList = questionList => {
     firestore.collection('question').get()
     .then((snapshot)=>{
       var rows= [];
+      // console.log("snapshot ", snapshot );
       snapshot.forEach((doc) => {
         const question = doc.data();
         
         const id = doc.id;
         // question.id = id;
-        // console.log({id : id, ...question});
+        console.log({id : id, ...question});
+        question["createdAt"] = question["createdAt"].toDate();
+        if (question["comments"]){
+          question["comments"].forEach(comment => {
+            comment["metadata"] = comment["metadata"].toDate();
+          })
+        }
+
         rows.push({id : id, ...question});
       })
       console.log(rows);
@@ -78,6 +84,7 @@ export const addQuestion = question => {
         // authorLastName: 'Jooo',
         // authorId: 12345,
         createdAt: new Date(),
+        comments: new Array(),
       })
       .then(() => {
         // callback 위 작업이 실행되면 어떤 작업을 할 것인지
@@ -94,6 +101,47 @@ export const filterQuestion = (questionList, id) => ({
   questionList,
   id
 })
+
+export const addComment = (question, author, comment) => {
+  return (dispatch, getState) => {
+    firestore
+      .collection('question')
+      .doc(question["id"])
+      .update({
+        comments: firebase.firestore.FieldValue.arrayUnion({
+            author: author,
+            metadata: firebase.firestore.Timestamp.fromDate(new Date()),
+            comment: comment,
+          })
+
+      })
+    .then(() => {
+      dispatch({
+        type: 'ADD_COMMENT',
+        question,
+        author,
+        comment
+      })
+    })
+  }
+}
+
+export const getComments = (question) => {
+  return (dispatch, getState) => {
+    firestore
+      .collection('question')
+      .doc(question["id"])
+      .get()
+      .then((doc) => {
+        // console.log("getComments ", doc.data());
+        const comments = doc.data()["comments"]
+        dispatch({
+          type: 'GET_COMMENTS',
+          comments,
+      })
+    })
+  }
+}
 
 export const login = loginForm => {
   return (dispatch, getState) => {

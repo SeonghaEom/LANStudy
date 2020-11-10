@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import sampleReducer from './sampleReducer';
 import questionList from './questionListReducer';
 import question from './questionReducer';
+import comments from './commentReducer';
 import loginResult from './loginReducer';
 import {firebaseReducer} from "react-redux-firebase";
 import {firestoreReducer} from "redux-firestore";
@@ -14,5 +15,6 @@ export default combineReducers({
     firestore: firestoreReducer,
     questionList,
     question,
+    comments,
     loginResult,
 });

@@ -43,6 +43,7 @@ class Sidebar extends React.Component {
     const totalQuestionList = this.props.questionList;
     const _getQuestionList = this.props._getQuestionList;
     if (totalQuestionList.length == 0){
+      // console.log("call questioniList");
       _getQuestionList();
     }
     return (

@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import socket from '../../socket';
+// import socket from '../../socket';
 
 const Chat = ({ display, roomId }) => {
   const currentUser = sessionStorage.getItem('user');

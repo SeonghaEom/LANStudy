@@ -1,4 +1,4 @@
-export default (state=[{id: 1, title: "", body: ""}], action) => {
+export default (state={id: 1, topic: "공시생", title: "", body: "", comments:[]}, action) => {
     switch (action.type) {
       case 'GET_QUESTION':
         return action.question
@@ -6,6 +6,14 @@ export default (state=[{id: 1, title: "", body: ""}], action) => {
         return action.questionList.filter(function(element, index, array){
         return (element["id"] == action.id)
       })[0];
+      case 'ADD_COMMENT':
+        action.question["comments"]
+          .push({
+            author: action.author,
+            metadata: new Date(),
+            comment: action.comment,
+          });
+        return action.question;
       default:
         return state
     }

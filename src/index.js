@@ -13,6 +13,7 @@ import "firebase/auth";
 import "firebase/firestore";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import { createFirestoreInstance } from "redux-firestore";
+import 'semantic-ui-css/semantic.min.css'
 
 const rrfConfig = {
   userProfile: "users",

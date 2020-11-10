@@ -28,7 +28,7 @@ function App() {
       <div className="App">
         <Route path="/write" exact={true} component={Question} />
         <Route path="/question/:id" component={QuestionAnswer} />
-        <Route path="/" exact={true} component={Forum} />
+        <Route path="/" exact={true} component={Sidebar} />
         <Route path="/login" exact={true} component={Login} />
       </div>
         <AppContainer>

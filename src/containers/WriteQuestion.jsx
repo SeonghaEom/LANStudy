@@ -26,7 +26,7 @@ class Question extends React.Component {
         this.state = {
           titleValue : null,
           bodyValue: null,
-          topicValue: null,
+          topicValue: '영어',
       }
     }
 

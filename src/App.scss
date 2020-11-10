@@ -209,4 +209,10 @@ ol, ul {
     align-items: center;
     height: 100vh;
   }
+
+  &-comment {
+    overflow: scroll;
+    display: flex;
+    flex-direction: column;
+  }
 }
