@@ -53,7 +53,7 @@ class QuestionBoard extends React.Component {
   }
 
   joinButtonClick() {
-    this.props.history.push("/join");
+    this.props.history.push("/room-list");
   }
 
   render () {
