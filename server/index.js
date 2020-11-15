@@ -21,6 +21,22 @@ var corsOptions = {
 }
 app.use(cors(corsOptions))
 
+Set.prototype.intersection = function(setB) {
+  var intersection = new Set();
+  for (var elem of setB) {
+    if (this.has(elem)) {
+      intersection.add(elem);
+    }
+  }
+  return intersection;
+}
+
+app.get('/room-list', (req, res) => {
+  const rawRoomIds = Object.keys(io.sockets.adapter.rooms);
+  res.json([...new Set(rawRoomIds).intersection(new Set(createdRooms))]);
+});
+
+const createdRooms = [];
 
 let socketList = {};
 
@@ -70,6 +86,7 @@ io.on('connection', (socket) => {
    */
   socket.on('BE-join-room', ({ roomId, userName }) => {
     // Socket Join RoomName
+    createdRooms.push(roomId);
     socket.join(roomId);
     socketList[socket.id] = { userName, video: true, audio: true };
 

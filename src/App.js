@@ -11,9 +11,10 @@ import Forum from './containers/Forum';
 import Session from './containers/Session';
 import Login from './containers/Login';
 
-import Main from './components/Main/Main';
+import Join from './components/Main/Join';
 import Room from './components/Room/Room'
 import styled from 'styled-components';
+import RoomList from "./components/RoomList";
 
 
 const mapStateToProps = state => ({
@@ -33,7 +34,8 @@ function App() {
       </div>
         <AppContainer>
             <Switch>
-                <Route exact path="/join" component={Main} />
+                <Route exact path="/room-list" component={RoomList} />
+                <Route exact path="/join" component={Join} />
                 <Route exact path="/room/:roomId" component={Room} />
             </Switch>
         </AppContainer>
