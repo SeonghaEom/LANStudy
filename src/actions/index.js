@@ -25,7 +25,7 @@ export const actionName = actionParameter => ({
 
 
 export const getQuestionList = questionList => {
-
+  questionList = questionList || 0;
   return (dispatch, getState) => {
     firestore.collection('question').get()
     .then((snapshot)=>{
@@ -63,13 +63,14 @@ export const filterQuestionList = (questionList, key) => ({
 //   type: 'GET_QUESTION_LIST2',
 // })
 
-export const updateQuestionList = questionList => ({
+export const updateQuestionList = (questionList, newQuestion) => ({
     type: 'UPDATE_QUESTION_LIST',
     questionList,
+    newQuestion,
 })
 
-export const getQuestion = question => ({
-    type: 'GET_QUESTION',
+export const setQuestion = question => ({
+    type: 'SET_QUESTION',
     question
 })
 
@@ -103,6 +104,7 @@ export const filterQuestion = (questionList, id) => ({
 })
 
 export const addComment = (question, author, comment) => {
+  const metadata = firebase.firestore.Timestamp.fromDate(new Date());
   return (dispatch, getState) => {
     firestore
       .collection('question')
@@ -110,16 +112,19 @@ export const addComment = (question, author, comment) => {
       .update({
         comments: firebase.firestore.FieldValue.arrayUnion({
             author: author,
-            metadata: firebase.firestore.Timestamp.fromDate(new Date()),
+            metadata: metadata,
             comment: comment,
           })
 
       })
     .then(() => {
+      console.log ("figuring out metada is ", metadata.toDate());
+      const timestampToDate = metadata.toDate();
       dispatch({
         type: 'ADD_COMMENT',
         question,
         author,
+        timestampToDate,
         comment
       })
     })

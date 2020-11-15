@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
-import { getQuestionList, getComments } from '../actions';
+import { getQuestionList, getComments, setQuestion } from '../actions';
 import CommentSystem from './Comment';
 
 // function Game() {
@@ -22,6 +22,7 @@ const mapDispatchToProps = dispatch => {
   return {
       _getQuestionList: (questionList) => dispatch(getQuestionList(questionList)),
       _getComments: (question) => dispatch(getComments(question)),
+      // _setQuestion: (question) => dispatch(setQuestion(question)),
   }
 }
 
@@ -33,9 +34,6 @@ class QuestionAnswer extends React.Component {
     
 
     render(){
-      console.log(this.props)
-      // const questionId = this.props.match.params["id"];
-
       const {
         a, b, c, 
         questionList,

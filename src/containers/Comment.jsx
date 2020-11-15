@@ -1,19 +1,22 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { addComment } from '../actions';
+import { addComment, getQuestionList, filterQuestion } from '../actions';
 import { Button, Comment, Form, Header } from 'semantic-ui-react';
 
 const mapStateToProps = state => ({
   question: state.question,
   user: state.loginResult.value,
   comments: state.comments,
+  questionList: state.questionList,
 })
 
 //redux's dispatch to this.props
 const mapDispatchToProps = dispatch => {
     return {
       _addComment: (question, author, comment) => dispatch(addComment(question, author, comment)),
-      // _updateComments: (question) => dispatch(updateComments(question)),
+      _getQuestionList: (QL) => dispatch(getQuestionList(QL)),
+      _filterQuestion: (QL, id) => dispatch(filterQuestion(QL, id)),
+      // _updateQuestionList: (newQuestion) => dispatch(updateQuestionList(newQuestion)),
     }
 }
 
@@ -27,22 +30,19 @@ class CommentSystem extends React.Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.state = {
       text: '',
+      commentList: this.props.question["comments"],
+      question: this.props.question,
     }
   }
 
   handleSubmit(){
-  
+    console.log("submit ", this.props.question["comments"], this.state.commentList);
   this.props._addComment(this.props.question, this.props.user, this.state.text);
-  // this.props._updateComments(this.props.question);
-        // const {
-        //     questionList,
-        //     _addQuestion,
-        //     _getQuestionList,
-        // } = this.props;
-        // console.log(this.state.titleValue, this.state.bodyValue);
-
-        // _addQuestion({title: this.state.titleValue, body: this.state.bodyValue, topic: this.state.topicValue});
-        // _getQuestionList(questionList)
+  this.props._getQuestionList();
+  this.props._filterQuestion(this.props.questionList, this.props.question["id"]);
+  // console.log(this.props.question);
+  this.setState({text: ''});
+  this.setState({commentList: this.props.question["comments"]});
   }
 
   handleOnChange(event) {
@@ -53,9 +53,22 @@ class CommentSystem extends React.Component {
   })
 }
 
+  // static getDerivedStateFromProps(props, state) {
+  //   if (props.question != state.question) {
+  //     return {
+  //       text: '',
+  //       commentList: props.question["comments"],
+  //       question: props.question,
+  //     };
+  //   }
+  //   else {
+  //     console.log("hello ", props.question["comments"], state.commentList);
+  //   }
+  // }
+
   render() {
-    console.log("Comments ", this.props.question);
-    const commentList = this.props.question["comments"];
+    console.log("Comments ", this.props);
+    // console.log("Comments ", this.state.commentList);
     // console.log("commentList ", commentList["metadata"].toDate());
     return (
 
@@ -64,7 +77,9 @@ class CommentSystem extends React.Component {
           <Header as='h3' dividing>
             Comments
           </Header>
-          {commentList.map((item,i) => {return (
+          {this.state.commentList.length}
+          {this.state.commentList.map((item,i) => {
+            return (
             <Comment key={i}>
               <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
               <Comment.Content>

@@ -20,7 +20,6 @@ const mapStateToProps = state => ({
 //redux's dispatch to this.props
 const mapDispatchToProps = dispatch => {
     return {
-      _updateQuestionList: (QuestionList) => dispatch(getQuestionList(QuestionList)),
       _getQuestionList: () => dispatch(getQuestionList()),
       _filterQuestion: (QL, id) => dispatch(filterQuestion(QL, id)),
     }
