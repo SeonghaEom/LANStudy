@@ -4,11 +4,14 @@ import { Nav } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import { getQuestionList, filterQuestionList } from '../actions';
 import Forum from './Forum';
+import firestore from '../config/fbconfig';
+import * as firebase from 'firebase';
 
 //redux's state to this.props
 const mapStateToProps = state => ({
   questionList: state.questionList,
   user: state.loginResult.value,
+  isLoggedIn: state.loginResult.type,
 })
 
 //redux's dispatch to this.props
@@ -23,9 +26,11 @@ class Sidebar extends React.Component {
   constructor (props){
     super(props);
     this.loginButtonClick = this.loginButtonClick.bind(this);
+    this.signOut = this.signOut.bind(this);
     this.changeListClick = this.changeListClick.bind(this);
     this.state = {
-      totalQL: this.props.questionList
+      totalQL: this.props.questionList,
+      selectedKey: '수능',
     }
   }
 
@@ -34,9 +39,18 @@ class Sidebar extends React.Component {
     this.props.history.push("/login");
   }
 
+  signOut() {
+    firebase.auth().signOut().then(function() {
+      // Sign-out successful.
+    }).catch(function(error) {
+      // An error happened.
+    });
+  }
+
   changeListClick(selectedKey, totalQuestionList) {
-    console.log("filterquestion");
-    this.props._filterQuestionList(this.state.totalQL, selectedKey)
+    // console.log("filterquestion");
+    // this.props._filterQuestionList(this.state.totalQL, selectedKey);
+    this.setState({selectedKey: selectedKey});
   }
   render(){
     console.log("sidebar ", this.props);
@@ -49,10 +63,17 @@ class Sidebar extends React.Component {
     return (
       <div className = 'container-board'>
         <div className = "container-sidebar">
-          LANStudy
           <div>
-            <Button bsPrefix="button" className="button-login" onClick = {() => this.loginButtonClick()}> Login </Button>
+            {this.props.isLoggedIn ? "loggined in as " + this.props.user : null}
           </div>
+          {this.props.isLogginedIn ? 
+            <div>
+              <Button bsPrefix="button" className="button-login" onClick = {() => this.signOut()}> LogOut </Button>
+            </div>:
+            <div>
+              <Button bsPrefix="button" className="button-login" onClick = {() => this.loginButtonClick()}> Login </Button>
+            </div>
+          }
           <Nav defaultActiveKey="수능"
           className="flex-column"
           onSelect={(selectedKey) => this.changeListClick(selectedKey, totalQuestionList)}
@@ -71,7 +92,7 @@ class Sidebar extends React.Component {
             </Nav.Item>    
           </Nav>
         </div>
-        <Forum history={this.props.history}/>
+        <Forum history={this.props.history} selectedKey={this.state.selectedKey}/>
       </div>
     )
   }

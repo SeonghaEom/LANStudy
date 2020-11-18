@@ -57,7 +57,9 @@ class QuestionBoard extends React.Component {
 
   render () {
       console.log("at Foruum", this.props);
-      const questionList = this.props.questionList;
+      const questionList = this.props.questionList.filter(q => {
+        return q["topic"] == this.props.selectedKey;
+      });
       const _getQuestionList = this.props._getQuestionList;
       // if (questionList.length == 0){
       //   _getQuestionList();

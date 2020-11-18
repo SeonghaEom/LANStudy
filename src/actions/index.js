@@ -106,6 +106,7 @@ export const filterQuestion = (questionList, id) => ({
 
 export const addComment = (question, author, comment) => {
   const metadata = firebase.firestore.Timestamp.fromDate(new Date());
+  console.log("addComment ", author, comment);
   return (dispatch, getState) => {
     firestore
       .collection('question')
@@ -153,8 +154,8 @@ export const login = loginForm => {
   return (dispatch, getState) => {
     firebase.auth().signInWithEmailAndPassword(loginForm.id, loginForm.pw)
       .then(() => {
-        var user = firebase.auth().currentUser;
-        // console.log(user);
+        var user = firebase.auth().currentUser.email;
+        // console.log(user.email);
         dispatch( {type: 'LOGIN_SUCCESS',  user })
       })
       .catch(err => {

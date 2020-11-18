@@ -62,7 +62,7 @@ drawComment = (item, i) => (
   <Comment key={i}>
     <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
     <Comment.Content>
-      <Comment.Author className = "comment-author" as='a'>{item["author"]["email"]}</Comment.Author>
+      <Comment.Author className = "comment-author" as='a'>{item["author"]["email"] || item["author"]}</Comment.Author>
       <Comment.Metadata>
         <div>Written at {item["metadata"]}</div>
       </Comment.Metadata>

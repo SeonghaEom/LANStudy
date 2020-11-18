@@ -116,6 +116,8 @@ ol, ul {
     border: none;
     border-bottom: 1px solid $light-grey;
     color: $light-grey;
+    width: 170px;
+    display: inline-block;
     &:hover {
       color: grey;
     }
@@ -173,6 +175,8 @@ ol, ul {
     border-bottom: 1px solid grey;
     color:grey;
     opacity: 0.7;
+    width: 100px;
+    display: inline-block;
     &:hover {
       color: $point-color;
     }
@@ -211,6 +215,7 @@ ol, ul {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    // display: inline-block;
   }
 
   &-comment {
