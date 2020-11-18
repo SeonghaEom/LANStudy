@@ -69,8 +69,9 @@ class Question extends React.Component {
             <div className="container-writequestion">
               <div>
                 <Form>
+
                   <Form.Group controlId="formBasicEmail">
-                    <Form.Label column="lg" lg={2}> Write a question summary </Form.Label>
+                    {/* <Form.Label column="lg" lg={2}> Write a question summary </Form.Label> */}
                     <Form.Control
                       size="lg"
                       type="text"

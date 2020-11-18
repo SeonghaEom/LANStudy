@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { addComment, getQuestionList, filterQuestion } from '../actions';
+import { addComment, updateQuestionList, filterQuestion } from '../actions';
 import { Button, Comment, Form, Header } from 'semantic-ui-react';
 
 const mapStateToProps = state => ({
@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
     return {
       _addComment: (question, author, comment) => dispatch(addComment(question, author, comment)),
-      _getQuestionList: (QL) => dispatch(getQuestionList(QL)),
+      _updateQuestionList: (id, QL, newQ) => dispatch(updateQuestionList(id, QL, newQ)),
       _filterQuestion: (QL, id) => dispatch(filterQuestion(QL, id)),
       // _updateQuestionList: (newQuestion) => dispatch(updateQuestionList(newQuestion)),
     }
@@ -32,17 +32,22 @@ class CommentSystem extends React.Component {
       text: '',
       commentList: this.props.question["comments"],
       question: this.props.question,
+      needChange: false,
     }
   }
 
   handleSubmit(){
     console.log("submit ", this.props.question["comments"], this.state.commentList);
   this.props._addComment(this.props.question, this.props.user, this.state.text);
-  this.props._getQuestionList();
-  this.props._filterQuestion(this.props.questionList, this.props.question["id"]);
+  const newQ = this.props.question;
+  console.log("newQ", newQ, this.state.question);
+  this.props._updateQuestionList(this.props.question["id"], this.props.questionList, newQ);
+  // this.props._filterQuestion(this.props.questionList, this.props.question["id"]);
   // console.log(this.props.question);
   this.setState({text: ''});
-  this.setState({commentList: this.props.question["comments"]});
+  // this.setState({commentList: this.props.question["comments"]});
+  this.setState({needChange: true});
+  // this.forceUpdate();
   }
 
   handleOnChange(event) {
@@ -53,47 +58,62 @@ class CommentSystem extends React.Component {
   })
 }
 
-  // static getDerivedStateFromProps(props, state) {
-  //   if (props.question != state.question) {
-  //     return {
-  //       text: '',
-  //       commentList: props.question["comments"],
-  //       question: props.question,
-  //     };
+drawComment = (item, i) => (
+  <Comment key={i}>
+    <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
+    <Comment.Content>
+      <Comment.Author className = "comment-author" as='a'>{item["author"]["email"]}</Comment.Author>
+      <Comment.Metadata>
+        <div>Written at {item["metadata"]}</div>
+      </Comment.Metadata>
+      <Comment.Text>{item["comment"]}</Comment.Text>
+      <Comment.Actions>
+        <Comment.Action>Reply</Comment.Action>
+      </Comment.Actions>
+    </Comment.Content>
+  </Comment>
+  )
+
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.question != state.question) {
+      console.log("derive stat4e from props ", props.question["comments"].length, props.question);
+      return {
+        text: '',
+        commentList: props.question["comments"],
+        question: props.question,
+        length: props.question.length,
+      };
+    }
+    else {
+      console.log("hello ", props.question["comments"].length, state.commentList.length);
+      return {}
+      // return {
+      //   needChange: false,
+      // };
+    }
+  }
+
+  // shouldComponentUpdate(nextProps, nextState){
+
+  //       return ( != );
   //   }
-  //   else {
-  //     console.log("hello ", props.question["comments"], state.commentList);
-  //   }
-  // }
 
   render() {
     console.log("Comments ", this.props);
     // console.log("Comments ", this.state.commentList);
     // console.log("commentList ", commentList["metadata"].toDate());
+    
     return (
 
-      <div className="container-comment">
+      <div className="container-comment" key={this.props.questionList}>
         <Comment.Group>
           <Header as='h3' dividing>
             Comments
           </Header>
-          {this.state.commentList.length}
-          {this.state.commentList.map((item,i) => {
-            return (
-            <Comment key={i}>
-              <Comment.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
-              <Comment.Content>
-                <Comment.Author className = "comment-author" as='a'>{item["author"]["email"]}</Comment.Author>
-                <Comment.Metadata>
-                  <div>Written at {item["metadata"]}</div>
-                </Comment.Metadata>
-                <Comment.Text>{item["comment"]}</Comment.Text>
-                <Comment.Actions>
-                  <Comment.Action>Reply</Comment.Action>
-                </Comment.Actions>
-              </Comment.Content>
-            </Comment>
-          )})}
+          <div >
+            {this.state.commentList.map((item,i) => this.drawComment(item, i))}
+          </div>
           <Form reply>
             <Form.TextArea 
               onChange={(event) => this.handleOnChange(event)} value={this.state.text}

@@ -63,8 +63,9 @@ export const filterQuestionList = (questionList, key) => ({
 //   type: 'GET_QUESTION_LIST2',
 // })
 
-export const updateQuestionList = (questionList, newQuestion) => ({
+export const updateQuestionList = (id, questionList, newQuestion) => ({
     type: 'UPDATE_QUESTION_LIST',
+    id,
     questionList,
     newQuestion,
 })

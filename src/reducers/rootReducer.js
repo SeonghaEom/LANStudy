@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import sampleReducer from './sampleReducer';
+// import sampleReducer from './sampleReducer';
 import questionList from './questionListReducer';
 import question from './questionReducer';
 import comments from './commentReducer';

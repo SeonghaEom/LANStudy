@@ -35,6 +35,7 @@ class Sidebar extends React.Component {
   }
 
   changeListClick(selectedKey, totalQuestionList) {
+    console.log("filterquestion");
     this.props._filterQuestionList(this.state.totalQL, selectedKey)
   }
   render(){

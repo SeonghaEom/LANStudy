@@ -59,9 +59,9 @@ class QuestionBoard extends React.Component {
       console.log("at Foruum", this.props);
       const questionList = this.props.questionList;
       const _getQuestionList = this.props._getQuestionList;
-      if (questionList.length == 0){
-        _getQuestionList();
-      }
+      // if (questionList.length == 0){
+      //   _getQuestionList();
+      // }
       
       // let history = useHistory();
 
