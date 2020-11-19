@@ -53,6 +53,12 @@ ol, ul {
   width: 100px;
 }
 
+.forum-item-bold {
+  height: 34px;
+  width: 100px;
+  font-weight: bold;
+}
+
 
 .question {
   display: flex;
@@ -116,6 +122,19 @@ ol, ul {
     border: none;
     border-bottom: 1px solid $light-grey;
     color: $light-grey;
+    width: 170px;
+    display: inline-block;
+    &:hover {
+      color: grey;
+    }
+  }
+
+  &-item-bold {
+    margin: 20px;
+    background-color: $list-color;
+    border: none;
+    border-bottom: 1px solid $dark-grey;
+    color: $dark-grey;
     width: 170px;
     display: inline-block;
     &:hover {

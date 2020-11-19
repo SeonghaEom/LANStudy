@@ -27,6 +27,7 @@ class Question extends React.Component {
           titleValue : null,
           bodyValue: null,
           topicValue: '영어',
+          isAnnounce: false,
       }
     }
 
@@ -38,7 +39,7 @@ class Question extends React.Component {
         } = this.props;
         // console.log(this.state.titleValue, this.state.bodyValue);
 
-        _addQuestion({title: this.state.titleValue, body: this.state.bodyValue, topic: this.state.topicValue});
+        _addQuestion({title: this.state.titleValue, body: this.state.bodyValue, topic: this.state.topicValue, announcement: this.state.isAnnounce});
         _getQuestionList(questionList)
     }
 
@@ -59,6 +60,11 @@ class Question extends React.Component {
         case ("topic"):
           this.setState({
             topicValue: event.target.value
+          })
+        break;        
+        case ("check"):
+          this.setState({
+            isAnnounce: event.target.checked
           })
         break;
       }
@@ -90,7 +96,9 @@ class Question extends React.Component {
                       />
                   </Form.Group>
                   <Form.Group controlId="formBasicCheckbox">
-                    {/* <Form.Check type="checkbox" label="Check me out" /> */}
+                    <Form.Check type="checkbox" label="Make this question announcement!" value={this.state.isAnnounce}
+                    onChange={(event) => this.handleOnChange(event, "check")}
+                    />
                     <Form.Control
                       as="select"
                       onChange={(event) => this.handleOnChange(event, "topic")} value={this.state.topicValue}

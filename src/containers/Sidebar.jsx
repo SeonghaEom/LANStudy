@@ -41,10 +41,13 @@ class Sidebar extends React.Component {
 
   signOut() {
     firebase.auth().signOut().then(function() {
-      // Sign-out successful.
-    }).catch(function(error) {
+      console.log("signout success");
+    })
+    .catch(function(error) {
       // An error happened.
+      console.log("error ", error);
     });
+    this.props.history.push("/login");
   }
 
   changeListClick(selectedKey, totalQuestionList) {
@@ -66,10 +69,11 @@ class Sidebar extends React.Component {
           <div>
             {this.props.isLoggedIn ? "loggined in as " + this.props.user : null}
           </div>
-          {this.props.isLogginedIn ? 
+          {this.props.isLoggedIn ? 
             <div>
               <Button bsPrefix="button" className="button-login" onClick = {() => this.signOut()}> LogOut </Button>
-            </div>:
+            </div>
+            :
             <div>
               <Button bsPrefix="button" className="button-login" onClick = {() => this.loginButtonClick()}> Login </Button>
             </div>

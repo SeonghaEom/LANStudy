@@ -77,6 +77,9 @@ class QuestionBoard extends React.Component {
               <div >
               <ListGroup bsPrefix="forum" className="forum-list">
                 {questionList.map(item => (
+                  item["announcement"] ?
+                  <ListGroup.Item bsPrefix="forum" className = "forum-item-bold" key={item["id"]} onClick={() => this.handleClick(item["id"])}>{item["title"].slice(0,15) + "..."}</ListGroup.Item>
+                  :
                   <ListGroup.Item bsPrefix="forum" className = "forum-item" key={item["id"]} onClick={() => this.handleClick(item["id"])}>{item["title"].slice(0,15) + "..."}</ListGroup.Item>
                 ))
                 }
