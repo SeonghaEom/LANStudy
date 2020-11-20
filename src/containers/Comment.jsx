@@ -64,7 +64,7 @@ drawComment = (item, i) => (
     <Comment.Content>
       <Comment.Author className = "comment-author" as='a'>{item["author"]["email"] || item["author"]}</Comment.Author>
       <Comment.Metadata>
-        <div>Written at {item["metadata"]}</div>
+        <div>Written at {item["metadata"].toString()}</div>
       </Comment.Metadata>
       <Comment.Text>{item["comment"]}</Comment.Text>
       <Comment.Actions>

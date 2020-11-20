@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
-import { login } from '../actions';
+import { login, getQuestionList } from '../actions';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
@@ -15,7 +15,8 @@ const mapStateToProps = state => {
 //redux's dispatch to this.props
 const mapDispatchToProps = dispatch => {
     return {
-      _login : (loginForm) => dispatch(login(loginForm))
+      _login : (loginForm) => dispatch(login(loginForm)),
+      _getQuestionList: () => dispatch(getQuestionList()),
     }
 }
 
@@ -33,7 +34,7 @@ class Login extends React.Component {
   handleSubmit() {
 
     // _addQuestion({title: this.state.titleValue, body: this.state.bodyValue});
-    // _getQuestionList(questionList)
+    this.props._getQuestionList()
     this.props._login({id: this.state.idValue, pw: this.state.pwValue});
     console.log(this.props.loginResult);
   }
@@ -58,6 +59,8 @@ class Login extends React.Component {
     console.log(this.props.loginResult);
       return(
             <div className="container-login">
+              <div className="container-login-bigfont"> LANStudy </div>
+              <div className ="container-login-smallfont"> Online Streaming Education Platform </div>
               <div>
                 <Form>
                   <Form.Group controlId="formBasicEmail">

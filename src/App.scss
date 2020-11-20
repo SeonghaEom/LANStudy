@@ -226,6 +226,17 @@ ol, ul {
     height: 100vh;
   }
 
+  &-login-bigfont {
+    font-size: 72px;
+    margin: 30px;
+  }
+
+  &-login-smallfont {
+    font-size: 56px;
+    margin: 50px;
+    color: $dark-grey;
+  }
+
   &-writequestion {
     font-family: sans-serif;
     background-color: $sidebar-color;
